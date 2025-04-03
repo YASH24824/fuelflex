@@ -10,6 +10,7 @@ import Alldetails from "./pages/Alldetails";
 import Carrer from "./pages/Carrer";
 import Contactus from "./pages/Contactus";
 import Cart from "./pages/Cart"
+import Fullnews from "./pages/Fullnews"
 
 function App(){
   return(
@@ -26,6 +27,7 @@ function App(){
         <Route path="/contactus" element={<Contactus/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/shop/alldetails/:urls" element={<Alldetails/>}/>
+        <Route path="/news/:id" element={<Fullnews/>}/>
       </Routes>
       <Footer />
     </Router>

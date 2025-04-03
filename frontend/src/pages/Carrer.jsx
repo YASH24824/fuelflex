@@ -39,7 +39,7 @@ function Carrer() {
       </div>
 
       {/* Form Section */}
-      <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-amber-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           {/* Heading at the Start of the Form */}
           <h1 className="ourstoryform font-bold text-gray-800 text-center mb-30">

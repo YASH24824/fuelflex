@@ -4,14 +4,14 @@ import Layer_1 from "../assets/Ourstory/Layer_1.jpg";
 
 const FeatureCard = ({ icon, title, description }) => {
   return (
-    <div className="relative mb-5 bg-white rounded-3xl shadow-lg transition-all duration-300 flex flex-col items-center p-6 hover:scale-105 hover:bg-[#faf4ea]">
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[#6B4743] flex items-center justify-center text-white text-5xl shadow-md hover:bg-white hover:text-[#6B4743]">
-        {icon}
+    <div className="ourstory relative mb-5 bg-[#F3EEEA] rounded-3xl  transition-all duration-300 flex flex-col items-center p-6 hover:scale-105  hover:bg-[#B0A695]">
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[#6B4743] flex items-center justify-center text-white text-5xl shadow-md hover:bg-white hover:text-[#6B4743] ">
+        {icon }
       </div>
-      <h3 className="mt-20 text-2xl font-semibold text-gray-800 text-center">
+      <h3 className="ourstoryform mt-20 text-2xl font-semibold text-gray-800 text-center">
         {title}
       </h3>
-      <p className="mt-4 text-gray-600 text-center text-lg">
+      <p className="ourstoryform mt-4 text-gray-600 text-center text-lg">
         {description}
       </p>
     </div>
@@ -41,7 +41,7 @@ const CardSection = () => {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-[#F3EEEA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {cardData.map((card, index) => (
@@ -55,16 +55,15 @@ const CardSection = () => {
 
 const GridLayout = () => {
   return (
-    <div className="flex justify-center items-center">
-      <div className="max-w-9xl mx-auto grid grid-cols-1 lg:grid-cols-5 bg-white rounded-lg overflow-hidden mt-10 transition-transform duration-500 ">
+    <div className="flex justify-center items-center bg-[#F3EEEA] ">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 bg-[#F3EEEA] rounded-lg overflow-hidden mt-10 transition-transform duration-500 ">
         <div className="lg:order-first lg:col-span-3 p-8 hover:text-white">
           <h1
             style={{ lineHeight: "1" }}
-            className="text-2xl font-bold mb-4 text-gray-800 hover:text-white"
-          >
+            className="mydescription bg-[#F3EEEA] text-2xl font-bold mb-4 text-gray-800">
             Chase your vision, not the competition
           </h1>
-          <p className="text-gray-700 leading-relaxed hover:text-white">
+          <p className=" mydescription text-gray-700 leading-relaxed">
             FIRST UNIFIED was incepted by Mit Bhuva. Bringing their
             entrepreneurial skills, commitment, and astuteness to the fore, they
             have been guiding their team, working day in and day out to realise
@@ -106,12 +105,12 @@ const Ourstory = () => {
       ) : (
         <>
           {/* Main Content */}
-          <div className="bg-white py-0 transition-opacity duration-[1200ms] opacity-100">
+          <div className="bg-[#F3EEEA] py-0 transition-opacity duration-[1200ms] opacity-100">
             <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-0 ">
               <img
                 src={Layer_1}
                 alt="A Legacy of Sophistication"
-                className="mb-10 shadow-md w-full"
+                className="mb-1 shadow-md w-full"
               />
             </div>
           </div>
