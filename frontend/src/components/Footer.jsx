@@ -35,11 +35,11 @@ const Footer = () => {
             <div className="space-y-4">
               <h3 className="text-lg">Menu</h3>
               <ul className="space-y-3">
-                <li><a href="#">Shop</a></li>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Blogs</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Career</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/ourstory">Our Story</a></li>
+                <li><a href="/news">Blogs</a></li>
+                <li><a href="/contactus">Contact Us</a></li>
+                <li><a href="/carrer">Career</a></li>
               </ul>
             </div>
 

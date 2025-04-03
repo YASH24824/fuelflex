@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Layer_1 from "../assets/Ourstory/Layer_1.jpg";
 import Bread from "../assets/News/Bread.png";
 import Cake from "../assets/News/Cake.png";
 
 const ImageGallery = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -15,6 +17,7 @@ const ImageGallery = () => {
 
   const images = [
     {
+      id: 1,
       src: Bread,
       name: "Eco-Friendly and Delicious: How Fuelflex Peanut Butter Supports Sustainable Farming",
       description:
@@ -22,6 +25,7 @@ const ImageGallery = () => {
       date: "January 10, 2023",
     },
     {
+      id: 2,
       src: Cake,
       name: "Delicious Cake",
       description:
@@ -29,6 +33,7 @@ const ImageGallery = () => {
       date: "February 15, 2023",
     },
     {
+      id: 3,
       src: Layer_1,
       name: "Layered Dessert",
       description:
@@ -36,6 +41,7 @@ const ImageGallery = () => {
       date: "March 20, 2023",
     },
     {
+      id: 4,
       src: Layer_1,
       name: "Gourmet Treat",
       description:
@@ -45,35 +51,29 @@ const ImageGallery = () => {
   ];
 
   return (
-    <div
-      className={`max-h-8xl p-10 bg-[#faf4ea] transition-opacity duration-500 ${
-        isLoading ? "opacity-0" : "opacity-100"
-      }`}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-lg"
-          >
-            {/* Image Section */}
-            <div className="w-full bg-gray-100 flex items-center justify-center">
-              <img
-                src={image.src}
-                alt={`Image ${index + 1}`}
-                className="w-full h-64 object-cover rounded-t-lg transition-transform duration-300 "
-              />
-            </div>
-
-            {/* Content Section */}
-            <div className="p-4 bg-[#faf4ea] text-center rounded-b-lg">
-              <h3 className="text-lg font-semibold text-gray-800">{image.name}</h3> {/* Displaying Name */}
-              <p className="text-gray-500 text-sm mt-1">{image.date}</p> {/* Displaying Date */}
-              <p className="text-gray-800 mt-2">{image.description}</p> {/* Displaying Description */}
-            </div>
+    <div className="grid grid-cols-2 gap-6 p-6">
+      {images.map((image) => (
+        <div
+          key={image.id}
+          className="border rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer"
+          onClick={() => navigate(`/news/${image.id}`)}
+        >
+          {/* Image Section */}
+          <img
+            src={image.src}
+            alt={image.name}
+            className="w-full h-48 object-contain rounded-t-lg"
+          />
+          {/* Content Section */}
+          <div className="p-4">
+            <h3 className="text-lg font-bold mb-2">{image.name}</h3>
+            <p className="text-sm text-gray-500 mb-2">{image.date}</p>
+            <p className="text-sm text-gray-700">
+              {image.description.slice(0, 50)}...
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
