@@ -57,7 +57,7 @@ export default function Navbar() {
 
       {/* Desktop Icons */}
       <div className="hidden md:flex items-center space-x-6">
-        <Search className="w-5 h-5 text-[#121212] cursor-pointer hover:text-gray-500 transition-colors" />
+        <Search onClick={()=>navigate("/shop")} className="w-5 h-5 text-[#121212] cursor-pointer hover:text-gray-500 transition-colors" />
         <User className="w-5 h-5 text-[#121212] cursor-pointer hover:text-gray-500 transition-colors" />
         <div className="relative">
           <ShoppingBag onClick={()=>navigate("/cart")} className="w-5 h-5 text-[#121212] cursor-pointer hover:text-gray-500 transition-colors" />
