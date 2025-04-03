@@ -59,6 +59,13 @@ h1 {
   line-height: 1.6; /* Increases space between lines */
   font-weight: 600;
 }
+.alldetailsname {
+  font-family: "Playfair", serif;
+  letter-spacing: 1.3px; /* Adjusts spacing between letters */
+  font-size: large; /* Default font size */
+  line-height: 1.6; /* Increases space between lines */
+  font-weight: 600;
+}
 
 .ourstoryform{
   font-family: "Raleway", sans-serif;
@@ -67,5 +74,10 @@ h1 {
 .contactusdescription{
   font-family: "Merriweather", serif;
   font-size: large;
+  line-height: 2;
+}
+.alldetailsdescription{
+  font-family: "Merriweather", serif;
+  font-size:small;
   line-height: 2;
 }

@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Layer_1 from "../assets/Ourstory/Layer_1.jpg";
 import Bread from "../assets/News/Bread.png";
 import Cake from "../assets/News/Cake.png";
 
 const ImageGallery = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const images = [
     {
@@ -51,29 +43,48 @@ const ImageGallery = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-6 p-6">
-      {images.map((image) => (
-        <div
-          key={image.id}
-          className="border rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 cursor-pointer"
-          onClick={() => navigate(`/news/${image.id}`)}
-        >
-          {/* Image Section */}
-          <img
-            src={image.src}
-            alt={image.name}
-            className="w-full h-48 object-contain rounded-t-lg"
-          />
-          {/* Content Section */}
-          <div className="p-4">
-            <h3 className="text-lg font-bold mb-2">{image.name}</h3>
-            <p className="text-sm text-gray-500 mb-2">{image.date}</p>
-            <p className="text-sm text-gray-700">
-              {image.description.slice(0, 50)}...
-            </p>
+    <div className="w-full max-w-full px-4 py-8">
+      <h1 className="text-4xl font-bold text-brown-700 font-serif mb-13 text-center">
+  Latest News & Articles
+</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {images.map((image) => (
+          <div
+            key={image.id}
+            className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transform hover:translate-y-1 transition duration-300 cursor-pointer h-full flex flex-col"
+            onClick={() => navigate(`/news/${image.id}`)}
+          >
+            {/* Image Container with consistent aspect ratio */}
+            <div className="relative pt-[56.25%]"> {/* 16:9 Aspect Ratio */}
+              <img
+                src={image.src}
+                alt={image.name}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+
+            </div>
+            
+            {/* Content Section */}
+            <div className="p-5 flex-grow flex flex-col">
+              <h3 className="text-lg font-bold mb-3 line-clamp-2 transition">
+                {image.name}
+              </h3>
+              <p className="text-sm text-gray-600 mb-4 flex-grow">
+                {image.description.length > 100
+                  ? `${image.description.substring(0, 100)}...`
+                  : image.description}
+              </p>
+              <div className="flex justify-between items-center mt-auto">
+                <span className="text-xs text-gray-500">{image.date}</span>
+                <button className="text-sm font-medium text-[#776B5D] hover:text-[#B0A695] transition">
+                  Read More →
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

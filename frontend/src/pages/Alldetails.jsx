@@ -29,7 +29,7 @@ function Alldetails() {
   function handleaddTocart() {
     const formattedPrice = parseFloat(product.price.replace(/[^0-9.]/g, "")); // Convert "$280" to 280
     dispatch(addToCart({ ...product, price: formattedPrice, quantity }));
-    toast.success(`${product.name} (${quantity}) added to cart!`);
+    toast.success(`${product.name} added to cart!`);
   }
   
    
@@ -54,7 +54,7 @@ function Alldetails() {
 
         <div className="flex flex-col justify-start px-4 py-0 md:px-6 space-y-3">
           <p className="text-gray-500 uppercase text-sm">FUELFLEX</p>
-          <h2 className="text-xl md:text-3xl font-bold text-gray-900">{product.name}</h2>
+          <h2 className=" alldetailsname text-xl md:text-3xl font-bold text-gray-900">{product.name}</h2>
           <p className="text-lg md:text-xl font-medium text-gray-900 mb-2 md:mb-3">Rs. {product.price}.00</p>
 
           <div className="mb-4 md:mb-5">
@@ -76,19 +76,21 @@ function Alldetails() {
             </div>
           </div>
 
-          <button onClick={handleaddTocart} className="w-full py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition duration-200">
+          <button onClick={handleaddTocart} className="  cursor-pointer w-full py-2 border bg-[#6B4743] text-white border-gray-300 rounded-md hover:bg-[#5a3c38] transition duration-200">
             Add to Cart
           </button>
-          <button onClick={handlebuyNow} className="w-full py-2 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38] transition duration-200">
+          <button onClick={handlebuyNow} className="cursor-pointer w-full py-2 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38] transition duration-200">
             Buy it Now
           </button>
 
-          <p className="text-gray-700 mb-6">{product.description}</p>
+          <p className="alldetailsdescription text-gray-700 mb-6">{product.description}</p>
         </div>
       </div>
 
       <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-4">You may also like</h3>
+      <h1 className="text-4xl font-bold text-brown-700 font-serif mb-13 text-center">
+  You may also like this
+</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {randomproduct.map((product) => (
             <div

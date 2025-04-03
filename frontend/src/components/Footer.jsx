@@ -55,9 +55,13 @@ const Footer = () => {
 
           {/* Newsletter Section */}
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-lg">
-              Want to know more? <a href="#" className="underline">Catalog</a>
-            </h3>
+          <h3 className="text-lg">
+  Want to know more? 
+  <a href="/catalog.pdf"  target="_blank" rel="noopener noreferrer">
+    Catalog
+  </a>
+</h3>
+
             <div className="flex">
               <input type="email" placeholder="Email" className="flex-1 px-4 py-2 border border-gray-300 focus:outline-none" />
               <button className="px-4 py-2 border border-l-0 border-gray-300 hover:bg-gray-100">
