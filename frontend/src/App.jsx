@@ -13,6 +13,8 @@ import Cart from "./pages/Cart"
 import Fullnews from "./pages/Fullnews"
 import Login from "./pages/Account/Login.jsx"
 import Signup from "./pages/Account/Signup.jsx";
+import Orderhistory from "./pages/Account/Orderhistory.jsx";
+import Payment from "./pages/Account/Payment.jsx";
 function App(){
   return(
     <>
@@ -31,6 +33,8 @@ function App(){
         <Route path="/news/:id" element={<Fullnews/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/orderhistory" element={<Orderhistory/>}/>
+        <Route path="/payment" element={<Payment/>}/>
       </Routes>
       <Footer />
     </Router>
