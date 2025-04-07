@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeOne, removeAll } from "../redux/action/cartAction";
 
 function CartPage() {
   const dispatch = useDispatch();
+  const navigate =useNavigate()
   const cartItems = useSelector((state) => state.cart);
+
+
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -14,6 +18,8 @@ function CartPage() {
     }
   }, [dispatch]);
 
+
+  
   // State to manage local quantities
   const [quantities, setQuantities] = useState(
     cartItems.reduce((acc, item) => ({ ...acc, [item.id]: item.quantity }), {})
@@ -138,54 +144,56 @@ function CartPage() {
         </div>
 
         {/* Order Summary Section */}
-        <div className="bg-[#faf4ea] rounded-lg p-4 h-[300px] overflow-auto">
-          <h3 className="text-gray-800 text-xl font-semibold mb-4">Order Summary</h3>
+        {/* Order Summary Section */}
+<div className="bg-[#faf4ea] rounded-lg p-4 min-h-[300px]">
+  <h3 className="text-gray-800 text-xl font-semibold mb-4">Order Summary</h3>
 
-          <div className="mb-4">
-            <div className="flex justify-between items-center">
-              <span>Total Items:</span>
-              <span>{totalQuantity}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>Total Cost:</span>
-              <span>Rs. {totalPrice.toFixed(2)}</span>
-            </div>
-          </div>
+  <div className="mb-4">
+    <div className="flex justify-between items-center">
+      <span>Total Items:</span>
+      <span>{totalQuantity}</span>
+    </div>
+    <div className="flex justify-between items-center">
+      <span>Total Cost:</span>
+      <span>Rs. {totalPrice.toFixed(2)}</span>
+    </div>
+  </div>
 
-          <input
-            type="text"
-            value={promoCode}
-            onChange={(e) => setPromoCode(e.target.value)}
-            placeholder="Enter Promo Code"
-            className="w-full px-3 py-2 border rounded-md mb-4"
-          />
-          <button
-            onClick={() => {}}
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Apply Promo Code
-          </button>
+  <input
+    type="text"
+    value={promoCode}
+    onChange={(e) => setPromoCode(e.target.value)}
+    placeholder="Enter Promo Code"
+    className="w-full px-3 py-2 border rounded-md mb-4"
+  />
+  <button
+    onClick={() => {}}
+    className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+  >
+    Apply Promo Code
+  </button>
 
-          {discount > 0 && (
-            <div className="mt-4 flex justify-between items-center">
-              <span>Discount:</span>
-              <span>Rs. {discount.toFixed(2)}</span>
-            </div>
-          )}
+  {discount > 0 && (
+    <div className="mt-4 flex justify-between items-center">
+      <span>Discount:</span>
+      <span>Rs. {discount.toFixed(2)}</span>
+    </div>
+  )}
 
-          <hr className="my-4" />
-          <div className="flex justify-between items-center font-bold text-lg">
-            <span>Total Bill:</span>
-            <span>Rs. {totalBill.toFixed(2)}</span>
-          </div>
+  <hr className="my-4" />
+  <div className="flex justify-between items-center font-bold text-lg">
+    <span>Total Bill:</span>
+    <span>Rs. {totalBill.toFixed(2)}</span>
+  </div>
 
-          <button
-            onClick={() => {}}
-            className="mt-6 w-full py-2 px-4 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38]"
-          >
-            Checkout
-          </button>
-        </div>
+  <button
+    onClick={() => navigate("/payment")}
+    className="mt-6 w-full py-2 px-4 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38]"
+  >
+    Checkout
+  </button>
+</div>
+
       </div>
     </div>
   );
