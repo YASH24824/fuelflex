@@ -50,26 +50,6 @@ import Ground_Oil_back from "../assets/Shop/Ground_Oil_back.jpg"
         image2:Choclate_Peanut_850gm,
         image3: Choclate_Peanut_850gm,
     
-        },
-        {
-            id: 5,
-            name: "Groundnut oil with Pack of 1 liter",
-            urls:"Groundnut_oil_with_Pack_of_1_liter",
-            description: "A staple in Indian kitchens, especially in western and central regions, Fuelflex Cold Pressed Groundnut Oil enriches the taste of your meals while providing essential nutrients. With its high smoke point, it is perfect for deep frying, sautéing, and everyday cooking, ensuring your dishes remain flavorful and healthy. Fuelflex Cold Pressed Groundnut Oil is packed with natural goodness, extracted using traditional methods to preserve its purity and nutritional benefits. Made from premium-quality groundnuts, it is 100% unrefined, virgin, and free from chemicals or additives. This ensures that every drop of oil delivers nature’s finest for your health, heart, and well-being.",
-            price: "$280",
-            image1: Ground_Oil,
-            image2:Ground_Oil_back,
-            image3: Choclate_Peanut_850gm,
-        },
-        {
-            id: 5,
-            name: "Groundnut oil with Pack of 1 liter",
-            urls:"Groundnut_oil_with_Pack_of_1_liter",
-            description: "A staple in Indian kitchens, especially in western and central regions, Fuelflex Cold Pressed Groundnut Oil enriches the taste of your meals while providing essential nutrients. With its high smoke point, it is perfect for deep frying, sautéing, and everyday cooking, ensuring your dishes remain flavorful and healthy. Fuelflex Cold Pressed Groundnut Oil is packed with natural goodness, extracted using traditional methods to preserve its purity and nutritional benefits. Made from premium-quality groundnuts, it is 100% unrefined, virgin, and free from chemicals or additives. This ensures that every drop of oil delivers nature’s finest for your health, heart, and well-being.",
-            price: "$280",
-            image1: Ground_Oil,
-            image2:Ground_Oil_back,
-            image3: Choclate_Peanut_850gm,
         }
         
 ]

@@ -15,12 +15,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-xl">FIRST UNIFIED</h3>
             <div className="space-y-2">
-              <p>
-                <span className="font-semibold">Address :</span>
-                <span>
-                  es49, Ved Industrial Park-2, Bhuvaladi Gam Road, Kathwada, Ahmedabad, Gujarat-382430
-                </span>
-              </p>
+              
               <p>
                 <span className="font-semibold">Call Us :</span> +91 9265067663
               </p>

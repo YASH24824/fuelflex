@@ -45,16 +45,17 @@
     <div className="w-1/3"></div>
 
     {/* Centered Shop Heading */}
-    <h1 className="text-4xl font-bold text-brown-700 font-serif text-center w-1/3">
-      Shop
-    </h1>
+    <h1 className="text-4xl font-bold font-serif text-center sm:text-center text-left w-1/3 sm:w-1/3 w-full">
+  Shop
+</h1>
+
 
     {/* Search Bar Positioned on the Right */}
     <div className="relative w-full max-w-sm w-1/3">
       <Search className="absolute left-3 top-3 w-5 h-5 text-gray-600" />
       <input
         type="text"
-        placeholder="Search for products..."
+        placeholder="Search "
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className="w-full p-3 pl-10 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-gray-400"
