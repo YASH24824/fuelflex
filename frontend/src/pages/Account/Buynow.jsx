@@ -5,13 +5,19 @@ import "react-phone-input-2/lib/style.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function PaymentPage() {
+function Buynow() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, totalPrice, totalQuantity, discount, totalBill } = location.state || {};
+  const { cartItems, totalPrice, totalQuantity } = location.state || {};
 
   const [contact, setContact] = useState("");
   const [loading, setLoading] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [promoApplied, setPromoApplied] = useState(false);
+  const [promoError, setPromoError] = useState("");
+  const [discount, setDiscount] = useState(location.state?.discount || 0);
+  const [totalBill, setTotalBill] = useState(location.state?.totalBill || totalPrice);
+
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -53,6 +59,26 @@ function PaymentPage() {
     });
   };
 
+  const handleApplyPromo = () => {
+    const validPromo = "SAVE10";
+    if (promoApplied) {
+      setPromoError("Promo code already applied.");
+      return;
+    }
+    if (promoCode.trim().toUpperCase() === validPromo) {
+      const discountAmount = totalPrice * 0.1;
+      const newBill = totalPrice - discountAmount;
+
+      setDiscount(discountAmount);
+      setTotalBill(newBill);
+      setPromoApplied(true);
+      setPromoError("");
+      toast.success("Promo code applied successfully!");
+    } else {
+      setPromoError("Invalid promo code.");
+    }
+  };
+
   const handlePayment = async () => {
     if (loading) return;
     if (!isFormComplete()) {
@@ -80,6 +106,7 @@ function PaymentPage() {
           paymentId: response.razorpay_payment_id,
           cartItems,
           totalBill,
+          discount,
           shippingDetails: { ...form, contact },
         };
 
@@ -93,7 +120,6 @@ function PaymentPage() {
           });
 
           const data = await res.json();
-
           if (!res.ok) throw new Error(data?.message || "Order creation failed");
 
           localStorage.removeItem("cartItems");
@@ -105,6 +131,7 @@ function PaymentPage() {
                 paymentId: response.razorpay_payment_id,
                 cartItems,
                 totalBill,
+                discount,
                 shippingDetails: { ...form, contact },
               },
             });
@@ -133,7 +160,6 @@ function PaymentPage() {
     };
 
     const rzp = new window.Razorpay(options);
-
     rzp.on("payment.failed", function () {
       toast.error("Payment failed. Please try again.");
       setLoading(false);
@@ -154,8 +180,8 @@ function PaymentPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <input
-                type="text"
                 name="fullName"
+                type="text"
                 placeholder="John Doe"
                 value={form.fullName}
                 onChange={handleChange}
@@ -166,8 +192,8 @@ function PaymentPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <input
-                type="email"
                 name="email"
+                type="email"
                 placeholder="john@example.com"
                 value={form.email}
                 onChange={handleChange}
@@ -213,8 +239,8 @@ function PaymentPage() {
               <div className="w-1/2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
                 <input
-                  type="text"
                   name="city"
+                  type="text"
                   placeholder="Bangalore"
                   value={form.city}
                   onChange={handleChange}
@@ -224,8 +250,8 @@ function PaymentPage() {
               <div className="w-1/2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
                 <input
-                  type="text"
                   name="state"
+                  type="text"
                   placeholder="Karnataka"
                   value={form.state}
                   onChange={handleChange}
@@ -237,8 +263,8 @@ function PaymentPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
               <input
-                type="text"
                 name="pincode"
+                type="text"
                 placeholder="560001"
                 maxLength={6}
                 value={form.pincode}
@@ -250,8 +276,31 @@ function PaymentPage() {
         </div>
 
         {/* Payment Summary */}
-        <div className="#bg-[#F3EEEA] p-4 ">
+        <div className="#bg-[#F3EEEA] p-4">
           <h3 className="text-gray-800 text-xl font-semibold mb-4">Payment Summary</h3>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Promo Code</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value)}
+                disabled={promoApplied}
+                placeholder="Enter promo code"
+                className="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6B4743]"
+              />
+              <button
+                onClick={handleApplyPromo}
+                disabled={promoApplied}
+                className="bg-[#6B4743] text-white px-4 py-2 rounded-md hover:bg-[#5a3c38] disabled:opacity-60"
+              >
+                Apply
+              </button>
+            </div>
+            {promoError && <p className="text-red-600 text-sm mt-1">{promoError}</p>}
+          </div>
+
           <div className="mb-4 space-y-2">
             <div className="flex justify-between">
               <span>Total Items:</span>
@@ -268,6 +317,7 @@ function PaymentPage() {
               </div>
             )}
           </div>
+
           <hr className="my-4" />
           <div className="flex justify-between font-bold text-lg">
             <span>Total Bill:</span>
@@ -289,4 +339,4 @@ function PaymentPage() {
   );
 }
 
-export default PaymentPage;
+export default Buynow;

@@ -1,7 +1,7 @@
 // cartAction.js
 
 
-import { ADD_TO_CART, BUY_NOW, REMOVE_ONE, REMOVE_ALL,QUANTITY,CHECKOUT } from "../type";
+import { ADD_TO_CART, BUY_NOW, REMOVE_ONE, REMOVE_ALL,QUANTITY }from "../type";
 
 export const addToCart = (item) => ({
     type: ADD_TO_CART,
@@ -25,6 +25,4 @@ export const quantity=()=>({
     type:QUANTITY
 })
 
-export const checkout=()=>({
-    type:CHECKOUT
-})
+

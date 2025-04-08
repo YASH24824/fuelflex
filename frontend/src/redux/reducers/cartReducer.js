@@ -1,4 +1,4 @@
-import { ADD_TO_CART, BUY_NOW, REMOVE_ONE, REMOVE_ALL,QUANTITY, CHECKOUT } from "../type";
+import { ADD_TO_CART, BUY_NOW, REMOVE_ONE, REMOVE_ALL,QUANTITY } from "../type";
 
 const initialState = [];
 
@@ -19,16 +19,14 @@ const cartReducer = (state = initialState, action) => {
         case BUY_NOW:
             return []; // Clear cart on purchase
 
-        case REMOVE_ONE:
-            return state.filter((item) => item.id !== action.payload);
-
+            case REMOVE_ONE:
+              return state.filter((item) => String(item.id) !== String(action.payload));
+            
         case REMOVE_ALL:
             return []; // Clear all items
 
             case QUANTITY:
                 return { ...state }; 
-        case CHECKOUT:
-                return
         default:
             return state;
     }

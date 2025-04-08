@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeOne, removeAll } from "../redux/action/cartAction";
+import { addToCart, removeOne } from "../redux/action/cartAction";
 
 function CartPage() {
   const dispatch = useDispatch();
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart);
 
+  // Load cart from localStorage only once
+  const [cartLoaded, setCartLoaded] = useState(false);
 
-
-  // Load cart from localStorage on mount
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    if (storedCart.length > 0) {
-      storedCart.forEach((item) => dispatch(addToCart(item)));
+    if (!cartLoaded) {
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (storedCart.length > 0 && cartItems.length === 0) {
+        storedCart.forEach((item) => dispatch(addToCart(item)));
+      }
+      setCartLoaded(true);
     }
-  }, [dispatch]);
+  }, [cartLoaded, dispatch, cartItems.length]);
 
+  const [quantities, setQuantities] = useState({});
 
-  
-  // State to manage local quantities
-  const [quantities, setQuantities] = useState(
-    cartItems.reduce((acc, item) => ({ ...acc, [item.id]: item.quantity }), {})
-  );
+  useEffect(() => {
+    const initialQuantities = cartItems.reduce((acc, item) => {
+      acc[item.id] = item.quantity;
+      return acc;
+    }, {});
+    setQuantities(initialQuantities);
+  }, [cartItems]);
 
   const handleQuantityChange = (id, newQuantity) => {
     if (newQuantity < 1) {
@@ -51,7 +57,8 @@ function CartPage() {
     return total + itemPrice * itemQuantity;
   }, 0);
 
-  useEffect(() => {
+ 
+  const handlepromocode = () => {
     if (promoCode === "SAVE10") {
       setDiscount(0.1 * totalPrice);
     } else if (promoCode === "SAVE20") {
@@ -59,7 +66,16 @@ function CartPage() {
     } else {
       setDiscount(0);
     }
-  }, [totalPrice, promoCode]);
+  };
+  
+  // 👇 Add this outside of handlepromocode (top-level in component)
+  useEffect(() => {
+    if (cartItems.length === 0 || totalPrice === 0) {
+      setDiscount(0);
+      setPromoCode("");
+    }
+  }, [cartItems, totalPrice]);
+  
 
   const totalQuantity = cartItems.reduce((total, item) => {
     return total + (quantities[item.id] || item.quantity || 1);
@@ -68,11 +84,10 @@ function CartPage() {
   const totalBill = totalPrice - discount;
 
   return (
-    <div className="bg-white py-6 sm:py-8 lg:py-12">
+    <div className="bg-[#F3EEEA] py-6 sm:py-8 lg:py-12">
       <div className="max-w-full px-4 md:px-8 mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Cart Items Section */}
-        <div className="lg:col-span-2 bg-[#faf4ea] rounded-lg p-4 h-[500px] overflow-auto">
+        {/* Cart Items */}
+        <div className="lg:col-span-2 bg-[#F3EEEA] rounded-lg p-4 h-[500px] overflow-auto">
           <div className="grid grid-cols-5 gap-4 mb-2 font-semibold text-gray-700">
             <div>Item</div>
             <div>Item Name</div>
@@ -89,9 +104,16 @@ function CartPage() {
               const itemQuantity = quantities[item.id] || item.quantity || 1;
 
               return (
-                <div key={item.id} className="grid grid-cols-5 gap-4 py-2 border-b last:border-b-0 items-center">
+                <div
+                  key={item.id}
+                  className="grid grid-cols-5 gap-4 py-2 border-b last:border-b-0 items-center"
+                >
                   <div className="flex items-center">
-                    <img src={item.image1} alt={item.name} className="w-16 h-16 object-cover rounded mr-2" />
+                    <img
+                      src={item.image1}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded mr-2"
+                    />
                   </div>
 
                   <div>
@@ -101,8 +123,15 @@ function CartPage() {
 
                   <div className="flex justify-center items-center space-x-2">
                     <button
-                      onClick={() => handleQuantityChange(item.id, itemQuantity - 1)}
-                      className="bg-gray-200 text-gray-800 rounded-md px-2 py-1"
+                      onClick={() =>
+                        handleQuantityChange(item.id, itemQuantity - 1)
+                      }
+                      className={`rounded-md px-2 py-1 ${
+                        itemQuantity === 1
+                          ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+                          : "bg-gray-200 text-gray-800"
+                      }`}
+                      disabled={itemQuantity === 1}
                     >
                       -
                     </button>
@@ -115,10 +144,12 @@ function CartPage() {
                           handleQuantityChange(item.id, newQuantity);
                         }
                       }}
-                      className="w-8 px-2 py-1 border rounded-md text-center"
+                      className="w-10 px-2 py-1 border rounded-md text-center"
                     />
                     <button
-                      onClick={() => handleQuantityChange(item.id, itemQuantity + 1)}
+                      onClick={() =>
+                        handleQuantityChange(item.id, itemQuantity + 1)
+                      }
                       className="bg-gray-200 text-gray-800 rounded-md px-2 py-1"
                     >
                       +
@@ -143,57 +174,74 @@ function CartPage() {
           )}
         </div>
 
-        {/* Order Summary Section */}
-        {/* Order Summary Section */}
-<div className="bg-[#faf4ea] rounded-lg p-4 min-h-[300px]">
-  <h3 className="text-gray-800 text-xl font-semibold mb-4">Order Summary</h3>
+        {/* Order Summary */}
+        <div className="bg-[#F3EEEA] rounded-lg p-4 min-h-[300px]">
+          <h3 className="text-gray-800 text-xl font-semibold mb-4">
+            Order Summary
+          </h3>
 
-  <div className="mb-4">
-    <div className="flex justify-between items-center">
-      <span>Total Items:</span>
-      <span>{totalQuantity}</span>
-    </div>
-    <div className="flex justify-between items-center">
-      <span>Total Cost:</span>
-      <span>Rs. {totalPrice.toFixed(2)}</span>
-    </div>
-  </div>
+          <div className="mb-4">
+            <div className="flex justify-between items-center">
+              <span>Total Items:</span>
+              <span>{totalQuantity}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>Total Cost:</span>
+              <span>Rs. {totalPrice.toFixed(2)}</span>
+            </div>
+          </div>
 
-  <input
-    type="text"
-    value={promoCode}
-    onChange={(e) => setPromoCode(e.target.value)}
-    placeholder="Enter Promo Code"
-    className="w-full px-3 py-2 border rounded-md mb-4"
-  />
-  <button
-    onClick={() => {}}
-    className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-  >
-    Apply Promo Code
-  </button>
+          <input
+            type="text"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
+            placeholder="Enter Promo Code"
+            className="w-full px-3 py-2 border rounded-md mb-4"
+          />
+        <button
+  onClick={handlepromocode}
+  className="w-full py-2 px-4 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38]"
+>
+  Apply Promo Code
+</button>
 
-  {discount > 0 && (
-    <div className="mt-4 flex justify-between items-center">
-      <span>Discount:</span>
-      <span>Rs. {discount.toFixed(2)}</span>
-    </div>
-  )}
 
-  <hr className="my-4" />
-  <div className="flex justify-between items-center font-bold text-lg">
-    <span>Total Bill:</span>
-    <span>Rs. {totalBill.toFixed(2)}</span>
-  </div>
+          {discount > 0 && (
+            <div className="mt-4 flex justify-between items-center">
+              <span>Discount:</span>
+              <span>Rs. {discount.toFixed(2)}</span>
+            </div>
+          )}
 
-  <button
-    onClick={() => navigate("/payment")}
-    className="mt-6 w-full py-2 px-4 bg-[#6B4743] text-white rounded-md hover:bg-[#5a3c38]"
-  >
-    Checkout
-  </button>
-</div>
+          <hr className="my-4" />
+          <div className="flex justify-between items-center font-bold text-lg">
+            <span>Total Bill:</span>
+            <span>Rs. {totalBill.toFixed(2)}</span>
+          </div>
 
+          <button
+  onClick={() =>
+    navigate("/payment", {
+      state: {
+        cartItems,
+        totalPrice,
+        totalQuantity,
+        discount,
+        totalBill,
+      },
+    })
+  }
+  disabled={totalBill === 0}
+  className={`mt-6 w-full py-2 px-4 rounded-md text-white transition-all duration-200 ${
+    totalBill === 0
+      ? "bg-[#6B4743]  cursor-not-allowed"
+      : "bg-[#6B4743] hover:bg-[#5a3c38]"
+  }`}
+>
+  Checkout
+</button>
+
+        </div>
       </div>
     </div>
   );

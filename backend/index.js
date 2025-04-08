@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import careerRoute from "./routes/career.js"
 import contactRoute from "./routes/contact.js"
 import authRoute from "./routes/auth.js"
+import orderRoute from "./routes/order.js"
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
 app.use("/api/career",careerRoute)
 app.use("/api/contact",contactRoute)
 app.use("/api/auth",authRoute)
+app.use("/api/order",orderRoute)
 
 // Add your other routes here...
 
