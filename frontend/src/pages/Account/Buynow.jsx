@@ -17,7 +17,7 @@ function Buynow() {
   const [promoError, setPromoError] = useState("");
   const [discount, setDiscount] = useState(location.state?.discount || 0);
   const [totalBill, setTotalBill] = useState(location.state?.totalBill || totalPrice);
-
+ const [quantities, setQuantities] = useState({});
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -25,6 +25,7 @@ function Buynow() {
     city: "",
     state: "",
     pincode: "",
+    country:""
   });
 
   useEffect(() => {
@@ -41,6 +42,7 @@ function Buynow() {
     form.address.trim() &&
     form.city.trim() &&
     form.state.trim() &&
+    form.country.trim()&&
     form.pincode.trim().length === 6 &&
     isValidPhone();
 
@@ -59,12 +61,33 @@ function Buynow() {
     });
   };
 
+  
+  const shipmentCharge = cartItems.reduce((total, item) => {
+    if (item.name === "Cold pressed groundnut oil with pack of 15 kg") {
+      const quantity = quantities[item.id] || item.quantity || 1;
+      return total + quantity * 300; // 
+    }
+    if (item.name === "Groundnut Oil with pack of 15 kg") {
+      const quantity = quantities[item.id] || item.quantity || 1;
+      return total + quantity * 300; // 
+    }
+    if (item.name === "Sunflower Oil with pack of 15 litre") {
+      const quantity = quantities[item.id] || item.quantity || 1;
+      return total + quantity * 250; // 
+    }
+    return total;
+  }, 0);
+
+  
+
+
   const handleApplyPromo = () => {
     const validPromo = "SAVE10";
     if (promoApplied) {
       setPromoError("Promo code already applied.");
       return;
     }
+
     if (promoCode.trim().toUpperCase() === validPromo) {
       const discountAmount = totalPrice * 0.1;
       const newBill = totalPrice - discountAmount;
@@ -94,8 +117,15 @@ function Buynow() {
       return;
     }
 
+    const totalQuantity = cartItems.reduce((total, item) => {
+      return total + (quantities[item.id] || item.quantity || 1);
+    }, 0);
+  
+    const totalBill = totalPrice - discount + shipmentCharge;
+
+
     const options = {
-      key: "rzp_test_1DP5mmOlF5G5ag", // Replace with live key in production
+      key: "rzp_live_9VGxQ8Uosjk4Es", // Replace with live key in production
       amount: totalBill * 100,
       currency: "INR",
       name: "Your Store",
@@ -106,10 +136,18 @@ function Buynow() {
           paymentId: response.razorpay_payment_id,
           cartItems,
           totalBill,
-          discount,
-          shippingDetails: { ...form, contact },
+          shippingDetails: {
+            fullName: form.fullName,
+            email: form.email,
+            contact: contact,
+            address: form.address,
+            city: form.city,
+            state: form.state,
+            pincode: form.pincode,
+            country:form.country
+          }
         };
-
+        
         try {
           const res = await fetch(`${import.meta.env.VITE_BASE_URL}/order`, {
             method: "POST",
@@ -117,6 +155,7 @@ function Buynow() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(orderData),
+            credentials: "include", // ✅ This sends cookies like access_token
           });
 
           const data = await res.json();
@@ -174,11 +213,11 @@ function Buynow() {
       <div className="max-w-full px-4 md:px-8 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Shipping Info */}
         <div className="bg-[#F3EEEA] rounded-xl p-6 max-h-[85vh] overflow-y-auto">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Shipping Details</h2>
+          <h2 className="text-2xl buynowtexts font-bold text-gray-800 mb-6">Shipping Details</h2>
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <label className="block text-sm buynowtexts font-semibold mb-1">Full Name</label>
               <input
                 name="fullName"
                 type="text"
@@ -190,7 +229,7 @@ function Buynow() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm buynowtexts font-semibold mb-1">Email</label>
               <input
                 name="email"
                 type="email"
@@ -205,7 +244,7 @@ function Buynow() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+              <label className="block text-sm buynowtexts font-semibold mb-1">Contact Number</label>
               <PhoneInput
                 country={"in"}
                 value={contact}
@@ -224,7 +263,7 @@ function Buynow() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+              <label className="block text-sm buynowtexts font-semibold mb-1">Address</label>
               <textarea
                 name="address"
                 rows={3}
@@ -237,7 +276,7 @@ function Buynow() {
 
             <div className="flex gap-4">
               <div className="w-1/2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <label className="block buynowtexts text-sm font-semibold mb-1">City</label>
                 <input
                   name="city"
                   type="text"
@@ -248,7 +287,7 @@ function Buynow() {
                 />
               </div>
               <div className="w-1/2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                <label className="block buynowtexts text-sm font-semibold mb-1">State</label>
                 <input
                   name="state"
                   type="text"
@@ -260,11 +299,12 @@ function Buynow() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+            <div div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block buynowtwexts text-sm font-semibold mb-1">Pincode</label>
               <input
-                name="pincode"
                 type="text"
+                name="pincode"
                 placeholder="560001"
                 maxLength={6}
                 value={form.pincode}
@@ -272,15 +312,29 @@ function Buynow() {
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6B4743]"
               />
             </div>
+
+            {/* Add Country Field */}
+            <div className="w-1/2">
+              <label className="block buynowtexts text-sm font-semibold  mb-1">Country</label>
+              <input
+                type="text"
+                name="country"
+                placeholder="India"
+                value={form.country}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6B4743]"
+              />
+            </div>
+            </div>
           </div>
         </div>
 
         {/* Payment Summary */}
-        <div className="#bg-[#F3EEEA] p-4">
-          <h3 className="text-gray-800 text-xl font-semibold mb-4">Payment Summary</h3>
+        <div className="#bg-[#F3EEEA] p-6">
+          <h3 className="text-gray-800 buynowtexts text-xl font-bold mb-4">Payment Summary</h3>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Promo Code</label>
+            <label className="block text-sm buynowtexts font-semibold mb-1">Promo Code</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -303,25 +357,30 @@ function Buynow() {
 
           <div className="mb-4 space-y-2">
             <div className="flex justify-between">
-              <span>Total Items:</span>
-              <span>{totalQuantity}</span>
+              <span className="buynowtexts font-semibold">Total Items:</span>
+              <span className="buynowtexts font-semibold">{totalQuantity}</span>
             </div>
             <div className="flex justify-between">
-              <span>Total Cost:</span>
-              <span>Rs. {totalPrice?.toFixed(2)}</span>
+              <span className="buynowtexts font-semibold">Total Cost:</span>
+              <span className="buynowtexts font-semibold">Rs. {totalPrice?.toFixed(2)}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600 font-medium">
-                <span>Discount Applied:</span>
-                <span>- Rs. {discount.toFixed(2)}</span>
+                <span className="buynowtexts font-semibold">Discount Applied:</span>
+                <span className="buynowtexts font-semibold">- Rs. {discount.toFixed(2)}</span>
+              </div>
+            )} {shipmentCharge > 0 && (
+              <div className="flex justify-between items-center">
+                <span className="carttexts font-semibold">Shipment Charges:</span>
+                <span className="carttexts font-semibold">Rs. {shipmentCharge.toFixed(2)}</span>
               </div>
             )}
           </div>
 
           <hr className="my-4" />
           <div className="flex justify-between font-bold text-lg">
-            <span>Total Bill:</span>
-            <span>Rs. {totalBill?.toFixed(2)}</span>
+            <span className="buynowtexts font-semibold">Total Bill:</span>
+            <span className="buynowtexts font-semibold">Rs.  ₹{(totalPrice + shipmentCharge - discount).toFixed(2)}</span>
           </div>
 
           <button

@@ -10,4 +10,4 @@ const loginmappingSchema=new mongoose.Schema({
         required:true
     }
 })
-export default mongoose.model("login",loginmappingSchema)
+export default mongoose.model("Login",loginmappingSchema)

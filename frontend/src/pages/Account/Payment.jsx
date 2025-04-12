@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, totalPrice, totalQuantity, discount, totalBill } = location.state || {};
+  const { cartItems, totalPrice, totalQuantity, discount, totalBill,shipmentCharge } = location.state || {};
 
   const [contact, setContact] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ function PaymentPage() {
     city: "",
     state: "",
     pincode: "",
+    country: ""  // Add the country field here
   });
 
   useEffect(() => {
@@ -36,7 +37,8 @@ function PaymentPage() {
     form.city.trim() &&
     form.state.trim() &&
     form.pincode.trim().length === 6 &&
-    isValidPhone();
+    isValidPhone() &&
+    form.country.trim(); // Ensure country is also validated
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,7 +61,7 @@ function PaymentPage() {
       toast.error("Please fill all fields correctly before proceeding to payment.");
       return;
     }
-
+  
     setLoading(true);
     const isLoaded = await loadRazorpayScript();
     if (!isLoaded) {
@@ -67,9 +69,9 @@ function PaymentPage() {
       setLoading(false);
       return;
     }
-
+  
     const options = {
-      key: "rzp_test_1DP5mmOlF5G5ag", // Replace with live key in production
+      key: "rzp_live_9VGxQ8Uosjk4Es", // Replace with live key in production
       amount: totalBill * 100,
       currency: "INR",
       name: "Your Store",
@@ -80,9 +82,18 @@ function PaymentPage() {
           paymentId: response.razorpay_payment_id,
           cartItems,
           totalBill,
-          shippingDetails: { ...form, contact },
+          shippingDetails: {
+            fullName: form.fullName,
+            email: form.email,
+            address: form.address,
+            city: form.city,
+            state: form.state,
+            pincode: form.pincode,
+            country: form.country, // Ensure country is passed
+            contact: contact.replace(/\D/g, ""), // Format the contact number correctly
+          },
         };
-
+  
         try {
           const res = await fetch(`${import.meta.env.VITE_BASE_URL}/order`, {
             method: "POST",
@@ -90,22 +101,23 @@ function PaymentPage() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(orderData),
+            credentials: "include", // ✅ This sends cookies like access_token
           });
-
+        
           const data = await res.json();
-
+  
           if (!res.ok) throw new Error(data?.message || "Order creation failed");
-
+  
           localStorage.removeItem("cartItems");
           toast.success("Order placed successfully!");
-
+  
           setTimeout(() => {
             navigate("/shop", {
               state: {
                 paymentId: response.razorpay_payment_id,
                 cartItems,
                 totalBill,
-                shippingDetails: { ...form, contact },
+                shippingDetails: orderData.shippingDetails, // Pass full shipping details
               },
             });
           }, 2000);
@@ -131,16 +143,17 @@ function PaymentPage() {
         },
       },
     };
-
+  
     const rzp = new window.Razorpay(options);
-
+  
     rzp.on("payment.failed", function () {
       toast.error("Payment failed. Please try again.");
       setLoading(false);
     });
-
+  
     rzp.open();
   };
+  
 
   return (
     <div className="bg-[#F3EEEA] py-6 sm:py-8 lg:py-12">
@@ -148,11 +161,11 @@ function PaymentPage() {
       <div className="max-w-full px-4 md:px-8 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Shipping Info */}
         <div className="bg-[#F3EEEA] rounded-xl p-6 max-h-[85vh] overflow-y-auto">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Shipping Details</h2>
+          <h2 className="text-2xl paymentformtexts  font-bold mb-6">Shipping Details</h2>
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <label className="block paymentformtexts font-semibold mb-1">Full Name</label>
               <input
                 type="text"
                 name="fullName"
@@ -164,7 +177,7 @@ function PaymentPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block paymentformtexts font-semibold mb-1">Email</label>
               <input
                 type="email"
                 name="email"
@@ -179,7 +192,7 @@ function PaymentPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+              <label className="block paymentformtexts font-semibold mb-1">Contact Number</label>
               <PhoneInput
                 country={"in"}
                 value={contact}
@@ -198,7 +211,7 @@ function PaymentPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+              <label className="block paymentformtexts font-semibold mb-1">Address</label>
               <textarea
                 name="address"
                 rows={3}
@@ -211,7 +224,7 @@ function PaymentPage() {
 
             <div className="flex gap-4">
               <div className="w-1/2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <label className="block paymentformtexts font-semibold mb-1">City</label>
                 <input
                   type="text"
                   name="city"
@@ -222,7 +235,7 @@ function PaymentPage() {
                 />
               </div>
               <div className="w-1/2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                <label className="block paymentformtexts font-semibold mb-1">State</label>
                 <input
                   type="text"
                   name="state"
@@ -233,9 +246,9 @@ function PaymentPage() {
                 />
               </div>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+           <div div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block paymentformtexts font-semibold mb-1">Pincode</label>
               <input
                 type="text"
                 name="pincode"
@@ -246,40 +259,56 @@ function PaymentPage() {
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6B4743]"
               />
             </div>
+
+            {/* Add Country Field */}
+            <div className="w-1/2">
+              <label className="block paymentformtexts font-semibold mb-1">Country</label>
+              <input
+                type="text"
+                name="country"
+                placeholder="India"
+                value={form.country}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6B4743]"
+              />
+            </div>
+            </div>
           </div>
         </div>
 
         {/* Payment Summary */}
-        <div className="#bg-[#F3EEEA] p-4 ">
-          <h3 className="text-gray-800 text-xl font-semibold mb-4">Payment Summary</h3>
+        <div className="bg-[#F3EEEA] p-7">
+          <h3 className="paymentformtexts font-bold mb-4">Payment Summary</h3>
           <div className="mb-4 space-y-2">
             <div className="flex justify-between">
-              <span>Total Items:</span>
-              <span>{totalQuantity}</span>
+              <span className="paymentformtexts font-semibold">Total Items:</span>
+              <span className="paymentformtexts font-semibold">{totalQuantity}</span>
             </div>
             <div className="flex justify-between">
-              <span>Total Cost:</span>
-              <span>Rs. {totalPrice?.toFixed(2)}</span>
+              <span className="paymentformtexts font-semibold">Shipment charge:</span>
+              <span className="paymentformtexts font-semibold">{shipmentCharge}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="paymentformtexts font-semibold">Total Cost:</span>
+              <span className="paymentformtexts font-semibold">Rs. {totalPrice?.toFixed(2)}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600 font-medium">
-                <span>Discount Applied:</span>
-                <span>- Rs. {discount.toFixed(2)}</span>
+                <span className="paymentformtexts font-semibold">Discount Applied:</span>
+                <span className="paymentformtexts font-semibold">- Rs. {discount.toFixed(2)}</span>
               </div>
             )}
           </div>
           <hr className="my-4" />
           <div className="flex justify-between font-bold text-lg">
-            <span>Total Bill:</span>
-            <span>Rs. {totalBill?.toFixed(2)}</span>
+            <span className="paymentformtexts">Total Bill:</span>
+            <span className="paymentformtexts">Rs. {totalBill?.toFixed(2)}</span>
           </div>
 
           <button
             onClick={handlePayment}
             disabled={loading}
-            className={`mt-6 w-full py-2 px-4 text-white rounded-md transition duration-200 ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6B4743] hover:bg-[#5a3c38]"
-            }`}
+            className={`mt-6 w-full py-2 px-4 text-white rounded-md transition duration-200 ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6B4743] hover:bg-[#5a3c38]"}`}
           >
             {loading ? "Processing..." : "Pay Now"}
           </button>
