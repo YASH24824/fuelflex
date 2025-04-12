@@ -24,22 +24,7 @@ const ImageGallery = () => {
         "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore, they have been guiding their team, working day in and day out to realize a dream.",
       date: "February 15, 2023",
     },
-    {
-      id: 3,
-      src: Layer_1,
-      name: "Layered Dessert",
-      description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore, they have been guiding their team, working day in and day out to realize a dream.",
-      date: "March 20, 2023",
-    },
-    {
-      id: 4,
-      src: Layer_1,
-      name: "Gourmet Treat",
-      description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore, they have been guiding their team, working day in and day out to realize a dream.",
-      date: "April 25, 2023",
-    },
+   
   ];
 
   return (

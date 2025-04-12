@@ -1,21 +1,18 @@
 import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
-  paymentId: { type: String, required: true },
-  cartItems: { type: Array, required: true },
-  totalBill: { type: Number, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "Login", required: false }, // Link to User
+  paymentId: String,
+  cartItems: Array,
+  totalBill: Number,
   shippingDetails: {
-    name: String,
+    fullName: String,
     email: String,
-    contact: String,
-    address1: String,
-    address2: String,
+    address: String,
     city: String,
     state: String,
     pincode: String,
     country: String,
-  },
-  status: { type: String, default: "Pending" },
-}, { timestamps: true });
+    contact: String,}},{timestamps:true})
 
 export default mongoose.model("Order", orderSchema);

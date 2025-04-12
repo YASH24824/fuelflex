@@ -62,13 +62,13 @@ function Alldetails() {
           />
         </div>
 
-        <div className="flex flex-col justify-start px-4 py-0 md:px-6 space-y-3">
-          <p className="text-gray-500 uppercase text-sm">FUELFLEX</p>
-          <h2 className="text-xl md:text-3xl font-bold text-gray-900">{product.name}</h2>
-          <p className="text-lg md:text-xl font-medium text-gray-900 mb-2 md:mb-3">Rs. {product.price}.00</p>
+        <div className="flex flex-col justify-start px-4 py-0 md:px-4 pt-10 space-y-3">
+          <p className=" shoptexts uppercase text-sm">FUELFLEX</p>
+          <h2 className=" shoptexts text-xl  md:text-3xl font-bold text-gray-900">{product.name}</h2>
+          <p className="buynowtexts text-lg md:text-xl font-medium text-gray-900 mb-2 md:mb-3">Rs. {product.price}.00</p>
 
           <div className="mb-4 md:mb-5">
-            <p className="text-sm md:text-base text-gray-700 mb-2">Quantity</p>
+            <p className="buynowtexts text-sm md:text-base  mb-5">Quantity</p>
             <div className="flex border border-gray-300 rounded-md w-full max-w-[180px]">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -99,11 +99,11 @@ function Alldetails() {
             Buy it Now
           </button>
 
-          <p className="text-gray-700 mb-6">{product.description}</p>
+          <p className=" whitespace-pre-line text-gray-700 alldetailsdescription  mb-6">{product.description}</p>
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-20 md:mt-40">
         <h1 className="text-4xl font-bold text-brown-700 font-serif mb-13 text-center">
           You may also like this
         </h1>

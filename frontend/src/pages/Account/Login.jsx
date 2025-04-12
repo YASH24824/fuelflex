@@ -52,9 +52,9 @@ function Account() {
 
             toast.success("Login successful!");
             // Save user, token or navigate to orders/history
-            navigate("/orderhistory");
-        } catch (err) {
-            console.error(err);
+            navigate("/shop");
+        } catch (error) {
+            console.error(error);
             toast.error("Invalid email or password!");
         }
     };

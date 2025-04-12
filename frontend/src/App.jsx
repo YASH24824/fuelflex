@@ -16,6 +16,15 @@ import Signup from "./pages/Account/Signup.jsx";
 import Orderhistory from "./pages/Account/Orderhistory.jsx";
 import Payment from "./pages/Account/Payment.jsx";
 import Buynow from "./pages/Account/Buynow.jsx";
+import Natural from "./components/Home/Natural.jsx"
+import Chocolate from "./components/Home/Chocolate.jsx"
+import Groundnutoil from "./components/Home/Groundnutoil.jsx"
+import Sunfloweroil from "./components/Home/Sunfloweroil.jsx"
+import Coconutoil from "./components/Home/Coconutoil.jsx"
+import Privacy from "./components/Policies/privacy.jsx";
+import Termsandcondition from "./components/Policies/Termsandcondition.jsx";
+import Return from "./components/Policies/Return.jsx";
+import Shipping from "./components/Policies/Shipping.jsx";
 function App(){
   return(
     <>
@@ -37,6 +46,15 @@ function App(){
         <Route path="/orderhistory" element={<Orderhistory/>}/>
         <Route path="/payment" element={<Payment/>}/>
         <Route path="/buynow" element={<Buynow/>}/>
+        <Route path="/shop/natural" element={<Natural/>}/>
+        <Route path="/shop/chocolate" element={<Chocolate/>}/>
+        <Route path="/shop/groundnutoil" element={<Groundnutoil/>}/> 
+        <Route path="/shop/coconutoil" element={<Coconutoil/>}/>
+        <Route path="/shop/sunfloweroil" element={<Sunfloweroil/>}/>
+        <Route path="/privacy" element={<Privacy/>}/>
+        <Route path="/terms" element={<Termsandcondition/>}/>
+        <Route path="/return" element={<Return/>}/>
+        <Route path="/shipping" element={<Shipping/>}/>
       </Routes>
       <Footer />
     </Router>

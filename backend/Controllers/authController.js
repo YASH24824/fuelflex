@@ -19,21 +19,27 @@ export const login = async (req, res, next) => {
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid password" });
         }
+  
 
         // Create JWT token
         const token = jwt.sign(
-            { id: user._id, email: user.email },
-            process.env.JWT_SECRET || "yuabkugyfbl9fe7uiefw78i", // Replace with env secret
-            { expiresIn: "7d" }
+          { id: user._id, email: user.username },
+          process.env.JWT_SECRET || "yaaaaajjjjj",
+          { expiresIn: "30d" }
         );
+        
+
 
         // Send JWT as HttpOnly cookie
-        res.cookie("access_token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // send only over HTTPS in production
-            sameSite: "Strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        res.cookie('access_token', token, {
+          expires: new Date(Date.now() + 2592000000),
+          httpOnly: true,
+          domain:
+            process.env.NODE_ENV === "production" ,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         });
+       
 
         return res.status(200).json({ message: "Login successful", user });
 
@@ -41,6 +47,21 @@ export const login = async (req, res, next) => {
         console.error("Login error:", err);
         next(err);
     }
+};
+
+
+export const logout = async (req, res, next) => {
+  try {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    });
+
+    return res.status(200).json({ message: 'Logged out successfully' });
+  } catch (err) {
+    next(err);
+  }
 };
 
 

@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Carousel from "../components/Home/Carousel.jsx";
 import Productgrid from "../components/Home/ProductGrid.jsx";
+import Animation from "../components/Home/Animation.jsx";
+import StatsSection from "../components/Home/Statssection.jsx";
 
 const AnimatedSection = ({ children }) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
@@ -20,10 +22,13 @@ const AnimatedSection = ({ children }) => {
 
 function Home() {
   return (
-    <>
-      <Carousel />
-      <AnimatedSection>
-        <Productgrid />
+    <> <AnimatedSection>
+       <Animation/>
+       <StatsSection/>
+      {/* <Carousel />
+     
+        <Productgrid /> */}
+       
       </AnimatedSection>
     </>
   );
