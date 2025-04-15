@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <>
       {/* Animated Waves */}
-      <div className="relative w-full bg-[#776B5D] -mt-1 overflow-hidden leading-none">
+      <div className="relative w-full     -mt-1 overflow-hidden leading-none">
         <div className="wave-container">
           <svg
             className="wave-svg bg-[#776B5D]"
@@ -41,7 +41,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Content */}
-      <footer className="footer w-full bg-[#776B5D] py-12 px-4 md:px-8 lg:px-16 text-white">
+      <footer className="footer border border-[#776B5D] w-full bg-[#776B5D] py-12 px-4 md:px-8 lg:px-16 text-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {/* Company Info */}

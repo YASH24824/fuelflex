@@ -3,6 +3,7 @@ import Cover from "../assets/Carrer/Be_a_part_of_our_journey.jpg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion"; // Import motion
 
 function Carrer() {
   const [formdata, setformdata] = useState({
@@ -92,29 +93,67 @@ function Carrer() {
 
   return (
     <>
-      <div>
+      {/* Cover Image Section */}
+      <motion.div
+        className="w-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
         <img src={Cover} alt="Career Cover" className="w-full" />
-      </div>
+      </motion.div>
 
-      <div className="bg-amber-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* Intro Section */}
+      <motion.div
+        className="bg-[#F3EEEA] py-12 px-4 sm:px-6 lg:px-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className="max-w-3xl mx-auto text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
           <p className="ourstory text-gray-700 mb-4">
             Apply now and be a part of our energetic team!
           </p>
           <p className="ourstory text-gray-700 mb-8">
             Joining First Unified means becoming part of a dynamic team...
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="bg-amber-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="ourstoryform font-bold text-gray-800 text-center mb-30">
+      {/* Career Form Section */}
+      <motion.div
+        className="bg-[#F3EEEA] py-12 px-4 sm:px-6 lg:px-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.h1
+            className="ourstoryform font-bold text-gray-800 text-center mb-30"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
             Elevate Your Career Path.
-          </h1>
+          </motion.h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
+            <motion.div
+              className="grid grid-cols-2 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
               <div>
                 <label htmlFor="firstName" className="block ourstoryform font-bold">
                   First Name*
@@ -143,8 +182,9 @@ function Carrer() {
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm"
                 />
               </div>
-            </div>
+            </motion.div>
 
+            {/* Email Input */}
             <div>
               <label htmlFor="email" className="block ourstoryform font-bold">
                 Email*
@@ -161,6 +201,7 @@ function Carrer() {
               {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
             </div>
 
+            {/* Contact Number */}
             <div>
               <label htmlFor="contactNumber" className="block ourstoryform font-bold">
                 Contact Number
@@ -177,6 +218,7 @@ function Carrer() {
               {contactError && <p className="text-red-600 text-sm">{contactError}</p>}
             </div>
 
+            {/* Resume File Upload */}
             <div>
               <label htmlFor="resume" className="block ourstoryform font-bold">
                 Resume
@@ -205,6 +247,7 @@ function Carrer() {
               )}
             </div>
 
+            {/* Message Input */}
             <div>
               <label htmlFor="message" className="block ourstoryform font-bold">
                 Message
@@ -219,6 +262,7 @@ function Carrer() {
               ></textarea>
             </div>
 
+            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -229,8 +273,8 @@ function Carrer() {
               </button>
             </div>
           </form>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <ToastContainer />
     </>
