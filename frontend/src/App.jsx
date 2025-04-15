@@ -21,7 +21,7 @@ import Chocolate from "./components/Home/Chocolate.jsx"
 import Groundnutoil from "./components/Home/Groundnutoil.jsx"
 import Sunfloweroil from "./components/Home/Sunfloweroil.jsx"
 import Coconutoil from "./components/Home/Coconutoil.jsx"
-import Privacy from "./components/Policies/privacy.jsx";
+import Privacy from "./components/Policies/Privacy.jsx";
 import Termsandcondition from "./components/Policies/Termsandcondition.jsx";
 import Return from "./components/Policies/Return.jsx";
 import Shipping from "./components/Policies/Shipping.jsx";
