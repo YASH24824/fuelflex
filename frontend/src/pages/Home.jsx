@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Carousel from "../components/Home/Carousel.jsx";
-import Productgrid from "../components/Home/ProductGrid.jsx";
 import Animation from "../components/Home/Animation.jsx";
 import StatsSection from "../components/Home/Statssection.jsx";
 
@@ -25,10 +23,7 @@ function Home() {
     <> <AnimatedSection>
        <Animation/>
        <StatsSection/>
-      {/* <Carousel />
-     
-        <Productgrid /> */}
-       
+   
       </AnimatedSection>
     </>
   );
