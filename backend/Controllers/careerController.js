@@ -20,8 +20,8 @@ export const sendCareerMail = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.MAIL_USER, // use your verified email
-      to: "pyash90377@gmail.com",
+      from: email, // use your verified email
+      to: process.env.MAIL_USER,
       subject: `New Career Form Submission from ${fullName}`,
       text: `Name: ${fullName}\nEmail: ${email}\nContact: ${contactnumber}\nMessage: ${message}`,
       attachments: [

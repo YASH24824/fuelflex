@@ -56,7 +56,7 @@ export default function ProductHeroBanner() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % products.length);
-    }, 20000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 

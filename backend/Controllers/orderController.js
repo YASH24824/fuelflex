@@ -63,7 +63,7 @@ export const getOrderHistory = async (req, res) => {
    
 
     const orders = await ORDER.find({ userId });
-    console.log(orders)
+    
 
     res.status(200).json({ orders, email }); // sending both orders and user email
   } catch (error) {

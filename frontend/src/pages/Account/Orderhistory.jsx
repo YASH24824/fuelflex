@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaBoxOpen } from 'react-icons/fa';
 import { MdEmail, MdLogout } from 'react-icons/md';
 import { ImSpinner2 } from 'react-icons/im';
+import { motion } from 'framer-motion'; // Import motion for animations
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -36,19 +37,22 @@ const OrderHistory = () => {
       await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {}, {
         withCredentials: true,
       });
-      
-      window.location.href = '/login';
-      navigate("/login")
-   
 
+      window.location.href = '/login';
+      navigate("/login");
     } catch (err) {
       console.error('Logout failed', err);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <motion.div
+      className="min-h-screen bg-[#F3EEEA] py-10 px-4 sm:px-6 lg:px-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <motion.div className="max-w-4xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
             <FaBoxOpen className="text-3xl text-indigo-600" />
@@ -64,29 +68,56 @@ const OrderHistory = () => {
         </div>
 
         {email && (
-          <div className="flex items-center gap-2 text-gray-600 mb-4">
+          <motion.div className="flex items-center gap-2 text-gray-600 mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
             <MdEmail className="text-lg text-gray-500" />
             <span className="text-sm">
               Logged in as: <span className="font-medium">{email}</span>
             </span>
-          </div>
+          </motion.div>
         )}
 
         {loading ? (
-          <div className="flex items-center gap-2 text-gray-500 animate-pulse">
+          <motion.div
+            className="flex items-center gap-2 text-gray-500 animate-pulse"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
             <ImSpinner2 className="text-xl animate-spin" />
             <span>Loading your orders...</span>
-          </div>
+          </motion.div>
         ) : error ? (
-          <p className="text-red-500 font-medium">{error}</p>
+          <motion.p
+            className="text-red-500 font-medium"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            {error}
+          </motion.p>
         ) : orders.length === 0 ? (
-          <p className="text-gray-600">You have not placed any orders yet.</p>
+          <motion.p
+            className="text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            You have not placed any orders yet.
+          </motion.p>
         ) : (
-          <ul className="space-y-6">
+          <motion.ul
+            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
             {orders.map((order, index) => (
-              <li
+              <motion.li
                 key={order._id}
                 className="p-6 border border-gray-100 rounded-2xl shadow-sm bg-white hover:shadow-md transition-all"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
@@ -115,12 +146,12 @@ const OrderHistory = () => {
                     </div>
                   </div>
                 )}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 function Contactus() {
   const [formdata, setformdata] = useState({
@@ -69,7 +70,7 @@ function Contactus() {
   return (
     <>
       <ToastContainer />
-      <div className="bg-amber-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-[#F3EEEA] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-8xl mx-auto mb-15">
           <h1 className="ourstoryform font-bold text-gray-800 text-center mb-20">
             Let's get in touch
@@ -77,7 +78,11 @@ function Contactus() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Side */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="mb-">
                 <div className="flex items-center mb-2">
                   <span className="contactusdescription text-gray-700 font-bold">
@@ -129,15 +134,19 @@ function Contactus() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Side - Contact Form */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="block ourstoryform font-bold">Name*</label>
-                  <input
+                  <motion.input
                     type="text"
                     id="name"
                     name="name"
@@ -145,22 +154,26 @@ function Contactus() {
                     onChange={handlechange}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none sm:text-sm"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6 }}
                   />
                 </div>
 
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block ourstoryform font-bold">Email*</label>
-                  <input
+                  <motion.input
                     type="email"
                     id="email"
                     name="email"
                     value={formdata.email}
                     onChange={handlechange}
                     required
-                    className={`mt-1 block w-full px-3 py-2 border ${
-                      isEmailValid ? "border-gray-300" : "border-red-500"
-                    } rounded-md shadow-sm focus:outline-none sm:text-sm`}
+                    className={`mt-1 block w-full px-3 py-2 border ${isEmailValid ? "border-gray-300" : "border-red-500"} rounded-md shadow-sm focus:outline-none sm:text-sm`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
                   />
                   {!isEmailValid && (
                     <p className="text-red-600 text-sm mt-1">Please enter a valid email address</p>
@@ -170,7 +183,7 @@ function Contactus() {
                 {/* Mobile Number */}
                 <div>
                   <label htmlFor="mobileno" className="block ourstoryform font-bold">Mobile Number*</label>
-                  <input
+                  <motion.input
                     type="tel"
                     id="mobileno"
                     name="mobileno"
@@ -178,9 +191,10 @@ function Contactus() {
                     onChange={handlechange}
                     required
                     placeholder="Enter 10-digit mobile number"
-                    className={`mt-1 block w-full px-3 py-2 border ${
-                      isMobileValid ? "border-gray-300" : "border-red-500"
-                    } rounded-md shadow-sm focus:outline-none sm:text-sm`}
+                    className={`mt-1 block w-full px-3 py-2 border ${isMobileValid ? "border-gray-300" : "border-red-500"} rounded-md shadow-sm focus:outline-none sm:text-sm`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.4 }}
                   />
                   {!isMobileValid && (
                     <p className="text-red-600 text-sm mt-1">Mobile number must be exactly 10 digits.</p>
@@ -190,7 +204,7 @@ function Contactus() {
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className="block ourstoryform font-bold">Message*</label>
-                  <textarea
+                  <motion.textarea
                     id="message"
                     name="message"
                     value={formdata.message}
@@ -198,20 +212,26 @@ function Contactus() {
                     rows="4"
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none sm:text-sm"
-                  ></textarea>
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                  ></motion.textarea>
                 </div>
 
                 {/* Submit Button */}
                 <div>
-                  <button
+                  <motion.button
                     type="submit"
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-[#6B4743] text-white transition duration-300 hover:bg-[#D6B484] hover:text-[#6B4743] hover:border-[#6B4743]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.6 }}
                   >
                     Submit
-                  </button>
+                  </motion.button>
                 </div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
