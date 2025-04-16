@@ -4,6 +4,7 @@ import Logo from "../assets/Logo.png";
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"; // ✅ Import js-cookie
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,8 +33,10 @@ export default function Navbar() {
     <nav className="sticky top-0 left-0 w-full bg-[#EBE3D5] px-4 md:px-14 flex justify-between items-center z-50" style={{ height: '63.6667px' }}>
       {/* Logo */}
       <div>
-        <img src={Logo} alt="FUELFLEX Logo" className="w-[120px] h-[48px] mix-blend-darken" />
-      </div>
+  <Link to="/">
+    <img src={Logo} alt="FUELFLEX Logo" className="w-[120px] h-[48px] mix-blend-darken" />
+  </Link>
+</div>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-6 text-[14px] font-normal">
