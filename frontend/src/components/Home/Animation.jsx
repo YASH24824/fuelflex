@@ -98,19 +98,19 @@ export default function ProductHeroBanner() {
       </motion.div>
 
       {/* Product Carousel */}
-      <div className="relative flex justify-center items-center w-full max-w-7xl h-full z-10">
+      <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-7xl h-full z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            className="absolute inset-0 flex justify-center items-center"
+            className="flex flex-col md:flex-row items-center justify-center w-full h-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={transition}
           >
-            {/* Bullet Points - Top Left */}
+            {/* Bullet Points */}
             <motion.div
-              className="absolute top-20 left-0 md:left-20 w-72 flex flex-col items-start justify-start gap-2 p-6 text-left"
+              className="w-full md:w-72 flex flex-col items-start justify-start gap-2 p-6 text-left md:absolute md:top-20 md:left-20 mb-8 md:mb-0" // Added margin-bottom
               initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -100, opacity: 0 }}
@@ -119,9 +119,8 @@ export default function ProductHeroBanner() {
               {bulletPoints.map((line, idx) => (
                 <p
                   key={idx}
-                  className=" alldetailsdescription text-sm md:text-base font-medium text-[#3a3a3a] flex items-start gap-2"
+                  className="alldetailsdescription text-sm md:text-base font-medium text-[#3a3a3a] flex items-start gap-2"
                 >
-              
                   {line}
                 </p>
               ))}
@@ -129,7 +128,7 @@ export default function ProductHeroBanner() {
 
             {/* Center Image */}
             <motion.div
-              className="z-10"
+              className="z-10 my-6 md:my-0"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -138,13 +137,13 @@ export default function ProductHeroBanner() {
               <img
                 src={products[current].image}
                 alt="Product"
-                className="h-[550px] md:h-[550px] object-contain drop-shadow-2xl"
+                className="h-[340px] sm:h-[300px] md:h-[550px] object-contain drop-shadow-2xl"
               />
             </motion.div>
 
-            {/* Description - Bottom Right */}
+            {/* Description */}
             <motion.div
-              className="absolute bottom-20 right-0 md:right-5 md:bottom-40 w-96 flex flex-col gap-2 p-4 bg-opacity-60 rounded-xl"
+              className="w-full md:w-96 flex flex-col gap-2 p-4 bg-opacity-60 rounded-xl md:absolute md:bottom-40 md:right-5 mt-8 md:mt-0"  // Increased margin-top
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 100, opacity: 0 }}

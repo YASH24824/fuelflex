@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 function Contactus() {
   const [formdata, setformdata] = useState({
@@ -14,6 +14,7 @@ function Contactus() {
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileValid, setIsMobileValid] = useState(true);
+  const [submitting, setSubmitting] = useState(false); // 👈 Added state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,8 @@ function Contactus() {
       toast.error("Please enter valid email and mobile number.");
       return;
     }
+
+    setSubmitting(true); // 👈 Set to true before sending
 
     try {
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contact`, formdata);
@@ -38,6 +41,8 @@ function Contactus() {
     } catch (err) {
       toast.error("Failed to send message. Please try again.");
       console.error(err);
+    } finally {
+      setSubmitting(false); // 👈 Reset state after submit
     }
   };
 
@@ -83,14 +88,10 @@ function Contactus() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="mb-">
-                <div className="flex items-center mb-2">
-                  <span className="contactusdescription text-gray-700 font-bold">
-                    FIRST UNIFIED
-                  </span>
-                </div>
+              <div>
+                <span className="contactusdescription text-gray-700 font-bold">FIRST UNIFIED</span>
 
-                <div className="mb-4">
+                <div className="mt-4">
                   <h3 className="contactusdescription text-lg font-semibold text-gray-700">
                     Office Address
                   </h3>
@@ -100,7 +101,7 @@ function Contactus() {
                   </p>
                 </div>
 
-                <div className="mb-4">
+                <div className="mt-4 space-y-2">
                   <div className="flex items-center">
                     <span className="mr-2">
                       <svg className="h-5 w-5 text-[#6B4743]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,11 +129,9 @@ function Contactus() {
                   </div>
                 </div>
 
-                <div>
-                  <p className="contactusdescription text-gray-600">
-                    An ISO 9001: 2015 Certified Company
-                  </p>
-                </div>
+                <p className="contactusdescription text-gray-600 mt-4">
+                  An ISO 9001: 2015 Certified Company
+                </p>
               </div>
             </motion.div>
 
@@ -222,12 +221,15 @@ function Contactus() {
                 <div>
                   <motion.button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-[#6B4743] text-white transition duration-300 hover:bg-[#D6B484] hover:text-[#6B4743] hover:border-[#6B4743]"
+                    disabled={submitting} // 👈 Disabled when submitting
+                    className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium ${
+                      submitting ? "bg-gray-400 cursor-not-allowed" : " bg-[#6B4743] hover:bg-[#5a3c38] "
+                    } text-white transition duration-300`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.6 }}
                   >
-                    Submit
+                    {submitting ? "Submitting..." : "Submit"}
                   </motion.button>
                 </div>
               </form>

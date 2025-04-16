@@ -21,8 +21,10 @@ const AnimatedSection = ({ children }) => {
 function Home() {
   return (
     <> <AnimatedSection>
+       <div className="bg-[#F3EEEA]">
        <Animation/>
        <StatsSection/>
+       </div>
    
       </AnimatedSection>
     </>
