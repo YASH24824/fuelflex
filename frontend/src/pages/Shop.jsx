@@ -32,7 +32,7 @@ function Shop() {
   };
 
   return (
-    <div className={`max-w-[1440px] bg-[#F3EEEA] mx-auto p-6 sm:p-9 h-full ${isTransitioning ? "fade-out" : ""}`}>
+    <div className={`max-w-[1440px]  bg-[#F3EEEA]  mx-auto p-6 sm:p-9 h-full ${isTransitioning ? "fade-out" : ""}`}>
         
       {/* Page Heading with Search Bar on the Right */}
       <motion.div
