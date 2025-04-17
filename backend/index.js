@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174","https://fuelflex.in","https://www.fuelflex.in", "https://admin.fuelflex.in"], credentials: true
+  origin: ["http://localhost:5173", "http://localhost:5174","https://fuelflex.in","https://www.fuelflex.in"], credentials: true
 }));
 
 app.use(cookieParser());
