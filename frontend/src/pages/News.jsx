@@ -12,19 +12,20 @@ const ImageGallery = () => {
     {
       id: 1,
       src: Bread,
-      name: "Eco-Friendly and Delicious: How Fuelflex Peanut Butter Supports Sustainable Farming",
+      name: "Savor the Earth: How Our Organic Peanut Butter Bites Make a Difference",
       description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore, they have been guiding their team, working day in and day out to realize a dream.",
-      date: "January 10, 2023",
+        "Crafted with love and care, our peanut butter bites are more than just a treat — they’re a step towards sustainable farming. With every jar, you're supporting ethical sourcing, green practices, and small farmers making a global impact.",
+      date: "March 12, 2024",
     },
     {
       id: 2,
       src: Cake,
-      name: "Delicious Cake",
+      name: "Indulgence Reimagined: The Secret Behind Our Guilt-Free Gourmet Cake",
       description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore, they have been guiding their team, working day in and day out to realize a dream.",
-      date: "February 15, 2023",
-    },
+        "Baked to perfection with zero preservatives and all-natural ingredients, our gourmet cake blends rich flavor with conscious indulgence. It's the perfect choice for those who crave luxury without compromising health or sustainability.",
+      date: "April 2, 2024",
+    }
+    
   ];
 
   return (
