@@ -27,23 +27,6 @@ mongoose.connect(process.env.MONGO)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-  app.get("/check-db", async (req, res) => {
-    const state = mongoose.connection.readyState;
-    // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
-    switch (state) {
-      case 0:
-        return res.status(200).send("❌ MongoDB is disconnected");
-      case 1:
-        return res.status(200).send("✅ MongoDB is connected");
-      case 2:
-        return res.status(200).send("⏳ MongoDB is connecting...");
-      case 3:
-        return res.status(200).send("⚠️ MongoDB is disconnecting...");
-      default:
-        return res.status(200).send("❓ Unknown MongoDB state");
-    }
-  });
-  
 // Health check route
 app.get("/", (req, res) => {
   console.log("Backend is perfectly running");

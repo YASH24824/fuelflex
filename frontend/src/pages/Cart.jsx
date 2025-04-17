@@ -11,12 +11,14 @@ function CartPage() {
   const [cartLoaded, setCartLoaded] = useState(false);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    if (storedCart.length > 0) {
-      storedCart.forEach((item) => dispatch(addToCart(item)));
+    if (!cartLoaded) {
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (storedCart.length > 0 && cartItems.length === 0) {
+        storedCart.forEach((item) => dispatch(addToCart(item)));
+      }
+      setCartLoaded(true);
     }
-  }, []);
-  
+  }, [cartLoaded, dispatch, cartItems.length]);
 
   const [quantities, setQuantities] = useState({});
 
