@@ -11,26 +11,26 @@ const NewsDetail = () => {
     {
       id: 1,
       src: Bread,
-      name: "Eco-Friendly and Delicious: How Fuelflex Peanut Butter Supports Sustainable Farming",
+      name: "Savor the Earth: How Our Organic Peanut Butter Bites Make a Difference",
       description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills, commitment, and astuteness to the fore...",
-      content: `Peanut butter is not just a delicious spread; it's a symbol of sustainability. Fuelflex Peanut Butter is made using organic peanuts sourced directly from local farmers. 
-      This ensures fair trade practices while reducing the environmental impact caused by large-scale farming.`,
-      date: "January 10, 2023",
-      author: "Mit Bhuva",
+        "Crafted with love and care, our peanut butter bites are more than just a treat — they’re a step towards sustainable farming. With every jar, you're supporting ethical sourcing, green practices, and small farmers making a global impact.",
+      content: `Peanut butter is not just a delicious spread; it's a symbol of sustainability. Our Organic Peanut Butter Bites are made using organic peanuts sourced directly from local farmers. This ensures fair trade practices while reducing the environmental impact caused by large-scale farming. Through mindful sourcing and minimal processing, we’re offering a snack that’s healthy for you — and the planet.`,
+      date: "March 12, 2024",
+      author: "Vivek mesuirya",
       readTime: "4 min read",
     },
     {
       id: 2,
       src: Cake,
-      name: "Delicious Cake",
+      name: "Indulgence Reimagined: The Secret Behind Our Guilt-Free Gourmet Cake",
       description:
-        "FIRST UNIFIED was incepted by Mit Bhuva. Bringing their entrepreneurial skills...",
-      content: `This cake is more than just a dessert; it's an experience. Made with responsibly sourced ingredients, this cake combines rich flavors with sustainability.`,
-      date: "February 15, 2023",
-      author: "Mit Bhuva",
+        "Baked to perfection with zero preservatives and all-natural ingredients, our gourmet cake blends rich flavor with conscious indulgence. It's the perfect choice for those who crave luxury without compromising health or sustainability.",
+      content: `This cake is more than just a dessert — it's a celebration of mindful indulgence. Made with responsibly sourced ingredients like organic flour, fair-trade chocolate, and pasture-raised eggs, each slice offers rich flavor without guilt. With zero preservatives and a clean baking process, our gourmet cake proves that luxury can go hand-in-hand with wellness and sustainability.`,
+      date: "April 2, 2024",
+      author: "Darshil",
       readTime: "3 min read",
-    },
+    }
+    
   ];
 
   const selectedArticle = articles.find((article) => article.id === parseInt(id));
